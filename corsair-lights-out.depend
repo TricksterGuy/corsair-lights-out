@@ -1,0 +1,18 @@
+# depslib dependency file v1.0
+1415426640 source:/drive/projects/corsair-lights-out/keylib.cpp
+	"keylib.hpp"
+
+1415426661 /drive/projects/corsair-lights-out/keylib.hpp
+	<string>
+
+1415427578 source:/drive/projects/corsair-lights-out/main.cpp
+	<features.h>
+	<stdio.h>
+	<unistd.h>
+	<time.h>
+	<dirent.h>
+	<stdlib.h>
+	<string.h>
+	<math.h>
+	"keylib.hpp"
+
