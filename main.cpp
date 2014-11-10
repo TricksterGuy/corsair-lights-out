@@ -101,6 +101,7 @@ void LightsOutKey::Toggle(bool neighbors)
 int main(int argc, char** argv)
 {
     int moves = 5;
+    int moves_taken = 0;
     if (argc >= 2)
     {
         moves = strtol(argv[1], NULL, 10);
@@ -134,6 +135,7 @@ int main(int argc, char** argv)
     {
         int c = getch();
         if (key_id.find(c) == key_id.end()) continue;
+        moves_taken++;
 
         int id = key_id[c];
         LightsOutKey& key = keys[id];
@@ -159,5 +161,5 @@ int main(int argc, char** argv)
     }
 
     endwin();
-    printf("You win\n");
+    printf("You win, moves taken: %d\n", moves_taken);
 }
