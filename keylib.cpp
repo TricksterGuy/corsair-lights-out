@@ -7,7 +7,7 @@ Key::Key(const std::string& key_name, int real_x, int real_y, bool is_on_k70) :
 {
 }
 
-// Adopted from ccMSC
+// Adopted from MSC
 Key positions[] =
 {
     {"mr", 38, 0, false}, {"m1", 50, 0, false}, {"m2", 62, 0, false}, {"m3", 74, 0, false}, {"light", 222, 0}, {"lock", 234, 0}, {"mute", 273, 0},
