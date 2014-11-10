@@ -31,7 +31,8 @@ class LightsOutKey
         bool on;
 };
 
-LightsOutKey keys[45] =
+#define NUM_KEYS 45
+LightsOutKey keys[NUM_KEYS] =
 {
     {0, 0, 0, 4, 1, 34}, {1, 1, 0, 4, 1, 35}, {2, 2, 0, 4, 1, 36}, {3, 3, 0, 4, 1, 37}, {4, 4, 0, 4, 1, 38}, {5, 5, 0, 4, 1, 39}, {6, 6, 0, 4, 1, 40}, {7, 7, 0, 4, 1, 41}, {8, 8, 0, 4, 1, 42}, {9, 9, 0, 4, 1, 43}, {10, 10, 0, 4, 1, 44}, {11, 11, 0, 4, 1, 45},
     {12, 0, 1, 4, 1, 58}, {13, 1, 1, 4, 1, 59}, {14, 2, 1, 4, 1, 60}, {15, 3, 1, 4, 1, 61}, {16, 4, 1, 4, 1, 62}, {17, 5, 1, 4, 1, 63}, {18, 6, 1, 4, 1, 64}, {19, 7, 1, 4, 1, 65}, {20, 8, 1, 4, 1, 66}, {21, 9, 1, 4, 1, 67}, {22, 10, 1, 4, 1, 68}, {23, 11, 1, 4, 1, 69},
@@ -88,7 +89,7 @@ void LightsOutKey::Toggle(bool neighbors)
                 keys[index - max_per_row[y - 1]].Toggle(false);
         }
         // Lower 2 keys
-        if (y < 4)
+        if (y < 3)
         {
             if (x < max_per_row[y + 1])
                 keys[index + max_per_row[y]].Toggle(false);
@@ -111,7 +112,7 @@ int main(int argc, char** argv)
     srand(time(NULL));
 
     Keyboard::Instance().StartBatch();
-    for (int i = 0; i < 45; i++)
+    for (int i = 0; i < NUM_KEYS; i++)
     {
         keys[i].TurnOff(true);
     }
@@ -120,7 +121,7 @@ int main(int argc, char** argv)
     Keyboard::Instance().StartBatch();
     for (int i = 0; i < moves; i++)
     {
-        int x = rand() % 46;
+        int x = rand() % NUM_KEYS;
         keys[x].Toggle();
     }
     Keyboard::Instance().EndBatch();
@@ -134,6 +135,12 @@ int main(int argc, char** argv)
     while(1)
     {
         int c = getch();
+        if (c == 10)
+        {
+            endwin();
+            Keyboard::Instance().AllOff();
+            return 0;
+        }
         if (key_id.find(c) == key_id.end()) continue;
         moves_taken++;
 
@@ -145,7 +152,7 @@ int main(int argc, char** argv)
         Keyboard::Instance().EndBatch();
 
         bool win = true;
-        for (int i = 0; i < 45; i++)
+        for (int i = 0; i < NUM_KEYS; i++)
         {
             if (keys[i].IsOn())
             {
@@ -162,4 +169,6 @@ int main(int argc, char** argv)
 
     endwin();
     printf("You win, moves taken: %d\n", moves_taken);
+    Keyboard::Instance().AllOff();
+    return 0;
 }
