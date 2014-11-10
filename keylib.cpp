@@ -1,11 +1,11 @@
 #include "keylib.hpp"
 
+Key NullKey("", -1, -1, false);
+
 Key::Key(const std::string& key_name, int real_x, int real_y, bool is_on_k70) :
     name(key_name), x(real_x), y(real_y), on_k70(is_on_k70)
 {
 }
-
-Key NullKey("", -1, -1, false);
 
 // Adopted from ccMSC
 Key positions[] =
@@ -36,4 +36,86 @@ const Key& get_key(int x, int y, int keyboard)
     if (pos == 255)
         return NullKey;
     else return positions[pos];
+}
+
+Keyboard::Keyboard()
+{
+    output = fopen("/dev/input/ckb1/cmd", "w");
+    if (!output)
+    {
+        fprintf(stderr, "Unable to open input device\n");
+        exit(-1);
+    }
+}
+
+Keyboard::~Keyboard()
+{
+    fclose(output);
+    output = NULL;
+}
+
+void Keyboard::StartBatch()
+{
+    if (batching)
+    {
+        fprintf(stderr, "Call to start batch without ending batch.  Ignoring\n");
+        return;
+    }
+
+    batching = true;
+    fprintf(output, "rgb ");
+}
+
+void Keyboard::EndBatch(bool flush)
+{
+    if (!batching)
+    {
+        fprintf(stderr, "Call to end batch without starting batch.  Ignoring\n");
+        return;
+    }
+
+    batching = false;
+    fprintf(output, "\n");
+    if (flush) fflush(output);
+}
+
+void Keyboard::Flush()
+{
+    fflush(output);
+}
+
+void Keyboard::KeyOn(const std::string& key_name, unsigned int color)
+{
+    if (batching)
+    {
+        fprintf(output, "%s:%06x ", key_name.c_str(), color);
+    }
+    else
+    {
+        fprintf(output, "rgb %s:%06x\n", key_name.c_str(), color);
+        fflush(output);
+    }
+}
+
+void Keyboard::KeyOff(const std::string& key_name)
+{
+    KeyOn(key_name, OFF_COLOR);
+}
+
+void Keyboard::AllOn(unsigned int color)
+{
+    if (batching)
+    {
+        fprintf(output, "%06x ", color);
+    }
+    else
+    {
+        fprintf(output, "rgb %06x\n", color);
+        fflush(output);
+    }
+}
+
+void Keyboard::AllOff()
+{
+    AllOn(OFF_COLOR);
 }

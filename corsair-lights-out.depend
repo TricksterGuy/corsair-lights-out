@@ -1,11 +1,11 @@
 # depslib dependency file v1.0
-1415426640 source:/drive/projects/corsair-lights-out/keylib.cpp
+1415604006 source:/drive/projects/corsair-lights-out/keylib.cpp
 	"keylib.hpp"
 
-1415426661 /drive/projects/corsair-lights-out/keylib.hpp
+1415603974 /drive/projects/corsair-lights-out/keylib.hpp
 	<string>
 
-1415427578 source:/drive/projects/corsair-lights-out/main.cpp
+1415605507 source:/drive/projects/corsair-lights-out/main.cpp
 	<features.h>
 	<stdio.h>
 	<unistd.h>
@@ -14,5 +14,8 @@
 	<stdlib.h>
 	<string.h>
 	<math.h>
+	<iostream>
+	<ncurses.h>
+	<map>
 	"keylib.hpp"
 
