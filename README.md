@@ -21,10 +21,10 @@ make sure you have the linux daemon from ccMSC/ckb running.
 You then press keys to turn lights on/off.
 The keys in the game are the following
 
-1 2 3 4 5 6 7 8 9 0 - =
-q w e r t y u i o p [ ]
-a s d f g h j k l ; '
-z x c v b n m , . /
+* 1 2 3 4 5 6 7 8 9 0 - =
+* q w e r t y u i o p [ ]
+* a s d f g h j k l ; '
+* z x c v b n m , . /
 
 When a key is pressed the led of it and its neighbors is toggled
 
