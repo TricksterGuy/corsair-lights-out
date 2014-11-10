@@ -15,7 +15,6 @@ class Key
         bool on_k70;
 };
 
-
 #define ON_COLOR 0xFF0000
 #define OFF_COLOR 0x000000
 
@@ -28,12 +27,19 @@ class Keyboard
             static Keyboard instance;
             return instance;
         }
+        /// Starts a batch of commands to send to the device.
         void StartBatch();
+        /// Ends a batch.
         void EndBatch(bool flush = true);
+        /// Flushes the stream so commands are sent to the device.
         void Flush();
+        /// Turns the specified key led to color passed in.
         void KeyOn(const std::string& key_name, unsigned int color = ON_COLOR);
+        /// Turns the specified key led off.
         void KeyOff(const std::string& key_name);
+        /// Turns on entire keyboard to color.
         void AllOn(unsigned int color = ON_COLOR);
+        /// Turns entire keyboard off.
         void AllOff();
     private:
         Keyboard();
